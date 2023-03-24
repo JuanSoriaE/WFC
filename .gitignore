@@ -1,6 +1,2 @@
 env
-__pycache__
 test.main.py
-requirements.txt
-mainSamples.py
-samples/*
