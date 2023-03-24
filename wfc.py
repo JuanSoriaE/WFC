@@ -3,7 +3,7 @@ from queue import Queue
 import heapq
 import random
 
-OFFS = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
+OFFS = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 
 def preBuild() -> None:
     global TOTAL, grid, collapsed, heap
@@ -74,14 +74,15 @@ def performWFC() -> None:
         propagate(r, c)
 
 # MAIN
-def WFC(ini_state: list, n: int, m: int, adj_dic: dict, neighbors_based: bool = False) -> list[list[list[int]]]:
+def WFC(ini_state: list, n: int, m: int, adj_dic: dict, adj_offs: list[tuple] = OFFS, neighbors_based: bool = False) -> list[list[list[int]]]:
     # Set global variables
-    global STATES, INI_STATE, N, M, ADJ_DIC, NEIGHBORS_BASED
+    global STATES, INI_STATE, N, M, ADJ_DIC, NEIGHBORS_BASED, OFFS
     STATES = len(ini_state) # int
     INI_STATE = ini_state # list
     N = n # int
     M = m # int
     ADJ_DIC = adj_dic # dict
+    OFFS = adj_offs
     NEIGHBORS_BASED = neighbors_based
 
     preBuild()
