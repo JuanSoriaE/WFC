@@ -1,4 +1,4 @@
-import utilsMain as utils
+from WFC.utils import main as utils
 from queue import Queue
 import heapq
 import random
