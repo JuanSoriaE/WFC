@@ -54,7 +54,8 @@ def propagate(r: int, c: int) -> None:
 
             if og_len != len(cell):
                 q.put((new_r, new_c))
-                heap.append([len(cell), new_r, new_c])
+                if not collapsed[new_r][new_c]:
+                    heapq.heappush(heap, [len(cell), new_r, new_c])
 
 def performWFC() -> None:
     # Wave Function Collapse Algorithm
