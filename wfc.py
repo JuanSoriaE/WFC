@@ -5,14 +5,15 @@ import random
 
 OFFS = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 
-def preBuild() -> None:
+def preBuild(ini_cell: tuple) -> None:
     global TOTAL, grid, collapsed, heap
     TOTAL = set(INI_STATE) # set
     grid = [[INI_STATE.copy() for j in range(M)] for i in range(N)] # list[list[list]]
     collapsed = [[False for j in range(M)] for i in range(N)] # list[list[bool]]
     
     # Heap sorted by entropy
-    heap = [[STATES, r, c] for r in range(N) for c in range(M)]
+    heap = [[STATES - 1, ini_cell[0], ini_cell[1]]]
+    heap += [[STATES, r, c] for r in range(N) for c in range(M)]
     heapq.heapify(heap)
 
 def propagate(r: int, c: int) -> None:
@@ -75,7 +76,7 @@ def performWFC() -> None:
         propagate(r, c)
 
 # MAIN
-def WFC(ini_state: list, n: int, m: int, adj_dic: dict, adj_offs: list[tuple] = OFFS, neighbors_based: bool = False) -> list[list[list[int]]]:
+def WFC(ini_state: list, n: int, m: int, adj_dic: dict, ini_cell: tuple = (0, 0), adj_offs: list[tuple] = OFFS, neighbors_based: bool = False) -> list[list[list[int]]]:
     # Set global variables
     global STATES, INI_STATE, N, M, ADJ_DIC, NEIGHBORS_BASED, OFFS
     STATES = len(ini_state) # int
@@ -86,7 +87,7 @@ def WFC(ini_state: list, n: int, m: int, adj_dic: dict, adj_offs: list[tuple] = 
     OFFS = adj_offs
     NEIGHBORS_BASED = neighbors_based
 
-    preBuild()
+    preBuild(ini_cell)
 
     performWFC()
 
